@@ -21,20 +21,36 @@ async function topGame() {
     //     getData('http://data.nba.net/json/cms/2018/league/standings.json ')
     // ]);
     // console.log(standingsData);
-
-    let city = 'Decorah';
     
-    let [cityWeather] = await Promise.all([
+    let city = 'Decorah';
+    let [parkData] = await Promise.all([
         // getData('https://stats.nba.com/stats/scoreboard/?GameDate=03/18/2019&LeagueID=00&DayOffset=0')
         // getData("https://stats.nba.com/js/data/playermovement/NBA_Player_Movement.json")
         // getData("http://data.nba.net/json/cms/2018/league/nba_games.json")
-        getData(`http://api.openweathermap.org/data/2.5/weather?q=${city},us&APPID=2b631a9cde7c2b110c438c3565bf8c5d`)
+        getData(`https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
-    //console.log(dateData);
-    let temperatureK = cityWeather.main.temp;
-    let temperatureF = (temperatureK -273.15) * 1.8 +32;
-    temperatureF = temperatureF.toFixed(2);
-    console.log(temperatureF);
+    console.log(parkData);
+
+    let lat = parkData.data;
+    console.log(lat);
+    let lon = '-114';
+
+    // let [cityWeather] = await Promise.all([
+    //     // getData('https://stats.nba.com/stats/scoreboard/?GameDate=03/18/2019&LeagueID=00&DayOffset=0')
+    //     // getData("https://stats.nba.com/js/data/playermovement/NBA_Player_Movement.json")
+    //     // getData("http://data.nba.net/json/cms/2018/league/nba_games.json")
+    //     //getData(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=2b631a9cde7c2b110c438c3565bf8c5d`)
+    //     getData(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=2b631a9cde7c2b110c438c3565bf8c5d`)
+    // ]);
+    // let temperatureK = cityWeather.main.temp;
+    // let temperatureF = (temperatureK -273.15) * 1.8 +32;
+    // temperatureF = temperatureF.toFixed(2);
+    // // console.log(cityWeather);
+    // console.log(temperatureF);
+
+
+
+
 
 
 
