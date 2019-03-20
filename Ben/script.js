@@ -23,6 +23,7 @@ async function topGame() {
     // console.log(standingsData);
 
     let city = 'Decorah';
+    
     let [cityWeather] = await Promise.all([
         // getData('https://stats.nba.com/stats/scoreboard/?GameDate=03/18/2019&LeagueID=00&DayOffset=0')
         // getData("https://stats.nba.com/js/data/playermovement/NBA_Player_Movement.json")
