@@ -13,8 +13,10 @@ async function getData(url) {
 }
 
 async function topGame() {
+    let parkName = document.getElementById('input_date').innerHTML;
+    console.log(parkName);
     let park = document.getElementById('input_date').value;
-    console.log(park);
+    // console.log(park);
     // let [scheduleData, teamData, standingsData] = await Promise.all([
     //     getData('http://data.nba.net/json/v1/2018/schedule.json'),
     //     getData('http://data.nba.net/json/v2/2018/teams.json'),
@@ -29,10 +31,10 @@ async function topGame() {
         // getData("http://data.nba.net/json/cms/2018/league/nba_games.json")
         getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
-    console.log(parkData);
+    // console.log(parkData);
 
     let latlong = parkData.data[0].latLong;
-    console.log(latlong);
+    // console.log(latlong);
     let latlongArray = latlong.split(" ");
     let lat = latlongArray[0].split(":");
     lat = lat[1].split(",");
@@ -40,8 +42,8 @@ async function topGame() {
     let long = latlongArray[1].split(":");
     long = long[1];
 
-    console.log(lat);
-    console.log(long);
+    // console.log(lat);
+    // console.log(long);
 
     // let lon = '-114';
 
@@ -56,7 +58,7 @@ async function topGame() {
     let temperatureF = (temperatureK -273.15) * 1.8 +32;
     temperatureF = temperatureF.toFixed(2);
     // console.log(cityWeather);
-    console.log(temperatureF);
+    console.log(temperatureF + " degrees F");
 
 
 
