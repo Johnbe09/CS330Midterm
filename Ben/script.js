@@ -16,8 +16,8 @@ async function topGame() {
     let [parkData] = await Promise.all([
         getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
+    // console.log(parkData.data[0]);
     let parkName = parkData.data[0].name;
-
     let latlong = parkData.data[0].latLong;
     let latlongArray = latlong.split(" ");
     var lat = latlongArray[0].split(":");
@@ -33,7 +33,12 @@ async function topGame() {
     let temperatureF = (temperatureK -273.15) * 1.8 +32;
     temperatureF = temperatureF.toFixed(2);
 
-    let note = document.getElementById('topGame');
+    let description = parkData.data[0].description;
+    let parkDescription = document.getElementById('parkDescription');
+    parkDescription.innerHTML = description;
+    parkDescription.setAttribute('class', 'alert alert-primary');
+
+    let note = document.getElementById('currentTemp');
     note.innerHTML = `The current temperature in ${parkName} National Park is ${temperatureF} degrees F`
     note.setAttribute('class', 'alert alert-primary');
 
@@ -46,5 +51,9 @@ function initMapParams(mapLat, mapLong) {
     var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: mapLat, lng: mapLong},
     zoom: 8
+    });
+    var marker = new google.maps.Marker({
+        position:{lat: mapLat, lng: mapLong},
+        map:map
     });
 }
