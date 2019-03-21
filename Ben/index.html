@@ -3,7 +3,20 @@
         <meta charset="utf-8"/>
         <title>Midterm Project</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
-
+        <style>
+            /* Always set the map height explicitly to define the size of the div
+                * element that contains the map. */
+            #map {
+                height: 100%;
+                
+            }
+            /* Optional: Makes the sample page fill the window. */
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
     </head>
     <body>
         <h1>Hello World! - Midterm Project</h1>
@@ -47,17 +60,18 @@
 
         
         <script>
-            var map;
+            // var map;
             function initMap() {
-                map = new google.maps.Map(document.getElementById('map'), {
+                var map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: -34.397, lng: 150.644},
                 zoom: 8
                 });
+                console.log();
             }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEy9Uc-XHBBaCWg-mUQlOCmd6lOH_oJUU&callback=initMap"
-        async defer></script>
-        <script> console.log("finished")</script>
+
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEy9Uc-XHBBaCWg-mUQlOCmd6lOH_oJUU&callback=initMap"></script>
+        <!-- <script> console.log("finished")</script> -->
         
         
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -29,10 +29,10 @@ async function topGame() {
 
     let latlong = parkData.data[0].latLong;
     let latlongArray = latlong.split(" ");
-    let lat = latlongArray[0].split(":");
+    var lat = latlongArray[0].split(":");
     lat = lat[1].split(",");
     lat = lat[0];
-    let long = latlongArray[1].split(":");
+    var long = latlongArray[1].split(":");
     long = long[1];
 
     let [cityWeather] = await Promise.all([
@@ -48,7 +48,24 @@ async function topGame() {
 
     console.log(`The current temperature in ${parkName} National Park is ${temperatureF} degrees F`);
     
+    // var map = new google.maps.Map(document.getElementById('map'), {
+    // center: {lat: lat, lng: long},
+    // zoom: 8
+    // });
+    // console.log('finished');
+
+    // async defer src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyAEy9Uc-XHBBaCWg-mUQlOCmd6lOH_oJUU&callback=initMap";
 }
+
+// function initMap() {
+
+//     var map = new google.maps.Map(document.getElementById('map'), {
+//     center: {lat: -34.397, lng: 150.664},
+//     zoom: 8
+//     });
+//     console.log('finished');
+// }
+
 
 
 // var map;
