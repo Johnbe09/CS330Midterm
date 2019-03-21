@@ -47,7 +47,8 @@ async function topGame() {
     temperatureF = temperatureF.toFixed(2);
 
     console.log(`The current temperature in ${parkName} National Park is ${temperatureF} degrees F`);
-    
+    initMapParams(parseFloat(lat), parseFloat(long));
+
     // var map = new google.maps.Map(document.getElementById('map'), {
     // center: {lat: lat, lng: long},
     // zoom: 8
@@ -57,14 +58,14 @@ async function topGame() {
     // async defer src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyAEy9Uc-XHBBaCWg-mUQlOCmd6lOH_oJUU&callback=initMap";
 }
 
-// function initMap() {
+function initMapParams(mapLat, mapLong) {
 
-//     var map = new google.maps.Map(document.getElementById('map'), {
-//     center: {lat: -34.397, lng: 150.664},
-//     zoom: 8
-//     });
-//     console.log('finished');
-// }
+    var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: mapLat, lng: mapLong},
+    zoom: 8
+    });
+    console.log('finished');
+}
 
 
 
