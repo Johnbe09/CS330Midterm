@@ -25,21 +25,7 @@
         <form>
             <div class='row'>
                 <p class='alert alert-primary'>Choose National Park</p>
-                <select id="input_park">
-                    <!-- <option value="acad">Acadia</option>
-                    <option value="arch">Arches</option>
-                    <option value="cany">Canyonlands</option>
-                    <option value="dena">Denali</option>
-                    <option value="glac">Glacier</option>
-                    <option value="grca">Grand Canyon</option>
-                    <option value="hosp">Hot Springs</option>
-                    <option value="mora">Mt. Rainier</option>
-                    <option value="romo">Rocky Mountains</option>
-                    <option value="yell">Yellowstone</option>
-                    <option value="yose">Yosemite</option>
-                    <option value="agfo">Agate Fossil Beds</option>
-                    <option value="alpo">allegheny portage</option>
-                    <option value="anac">anacostia</option> -->
+                <select id="input_state">
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -92,10 +78,34 @@
                     <option value="WY">Wyoming</option>
                     <option value="DC">Washington DC</option>
                 </select>
+            </div>
+            
+        </form>
+
+        <form>
+            <div class='row'>
+                <p class='alert alert-primary'>Choose National Park</p>
+                <select id="input_park">
+                    <option value="acad">Acadia</option>
+                    <option value="arch">Arches</option>
+                    <option value="cany">Canyonlands</option>
+                    <option value="dena">Denali</option>
+                    <option value="glac">Glacier</option>
+                    <option value="grca">Grand Canyon</option>
+                    <option value="hosp">Hot Springs</option>
+                    <option value="mora">Mt. Rainier</option>
+                    <option value="romo">Rocky Mountains</option>
+                    <option value="yell">Yellowstone</option>
+                    <option value="yose">Yosemite</option>
+                    <option value="agfo">Agate Fossil Beds</option>
+                    <option value="alpo">allegheny portage</option>
+                    <option value="anac">anacostia</option>
+                </select>
                 <button type='button' class='btn btn-primary' id='enter' onclick="topGame()">What's the temperature of this park?</button>
             </div>
             
         </form>
+
         
         <div id='parkDescription'>
             <!-- Will populate later -->

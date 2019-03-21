@@ -16,7 +16,16 @@ async function topGame() {
     let [parkData] = await Promise.all([
         getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
+    let [stateData] = await Promise.all([
+        getData(`https://developer.nps.gov/api/v1/parks?stateCode=mn&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
+    ])
     console.log(parkData.data[0]);
+    console.log(stateData.data);
+    let myList = [];
+    for (let state of Object.keys(stateData.data)) {
+        let ah = state;
+        console.log(ah);
+    }
     // let parkName = parkData.data[0].name;
     let latlong = parkData.data[0].latLong;
     let latlongArray = latlong.split(" ");
