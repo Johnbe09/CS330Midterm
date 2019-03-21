@@ -39,7 +39,8 @@ async function topGame() {
     parkDescription.setAttribute('class', 'alert alert-primary');
 
     let note = document.getElementById('currentTemp');
-    note.innerHTML = `The current temperature in ${parkName} National Park is ${temperatureF} degrees F`
+    let fullName = parkData.data[0].fullName;
+    note.innerHTML = `The current temperature in ${fullName} is ${temperatureF} degrees F`
     note.setAttribute('class', 'alert alert-primary');
 
     initMapParams(parseFloat(lat), parseFloat(long));
