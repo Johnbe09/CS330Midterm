@@ -33,13 +33,31 @@
             <!-- Will populate later -->
         </div>
 
+        <div id='map'>
+
+        </div>
+<!-- 
+        <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDvYzz9Qhl2NLOQrSfYqyJboUmGog1e1Ow&callback=initMap' async defer>
+        </script> -->
+
 
         <!-- <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
         </script> -->
 
         
-        
+        <script>
+            var map;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+                });
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEy9Uc-XHBBaCWg-mUQlOCmd6lOH_oJUU&callback=initMap"
+        async defer></script>
+        <script> console.log("finished")</script>
         
         
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

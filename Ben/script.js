@@ -50,3 +50,14 @@ async function topGame() {
     
 }
 
+
+// var map;
+// function initMap() {
+//     map = new google.maps.Map(document.getElementById('map'), {
+//         center: {lat: -34.397, lng: 150.664},
+//         zoom: 8
+//     });
+// }
+
+
+// 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDvYzz9Qhl2NLOQrSfYqyJboUmGog1e1Ow&callback=initMap()';
