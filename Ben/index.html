@@ -9,9 +9,21 @@
         <h1>Hello World! - Midterm Project</h1>
         <form>
             <div class='row'>
-                <p class='alert alert-primary'>Enter a Date (yyyymmdd)</p>
-                <input type='text' name='number' id="input_date">
-                <button type='button' class='btn btn-primary' id='enter' onclick="topGame()">What is the top game on this date?</button>
+                <p class='alert alert-primary'>Choose National Park</p>
+                <!-- <input type='text' name='number' id="input_date"> -->
+                <select id="input_date">
+                    <option value="acad">Acadia</option>
+                    <option value="arch">Arches</option>
+                    <option value="cany">Canyonlands</option>
+                    <option value="dena">Denali</option>
+                    <option value="glac">Glacier</option>
+                    <option value="grca">Grand Canyon</option>
+                    <option value="hosp">Hot Springs</option>
+                    <option value="romo">Rocky Mountains</option>
+                    <option value="yell">Yellowstone</option>
+                    <option value="yose">Yosemite</option>
+                </select>
+                <button type='button' class='btn btn-primary' id='enter' onclick="topGame()">What's the temperature of this park?</button>
             </div>
 
         </form>
