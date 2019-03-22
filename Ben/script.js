@@ -12,20 +12,77 @@ async function getData(url) {
 
 async function topGame() {
     let park = document.getElementById('input_park').value;
+    let state = document.getElementById('input_state').value;
 
     let [parkData] = await Promise.all([
         getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
     let [stateData] = await Promise.all([
-        getData(`https://developer.nps.gov/api/v1/parks?stateCode=mn&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
-    ])
+        getData(`https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
+    ]);
+    let [allParkData] = await Promise.all([
+        getData(`https://developer.nps.gov/api/v1/parks?limit=500&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
+    ]);
+
+
     console.log(parkData.data[0]);
     console.log(stateData.data);
-    let myList = [];
+    console.log(allParkData.data);
+    let myList = {};
     for (let state of Object.keys(stateData.data)) {
-        let ah = state;
-        console.log(ah);
+        let ah = parseInt(state);
+        // console.log(stateData.data[ah]);
+        let name = stateData.data[ah].fullName;
+        let code = stateData.data[ah].parkCode;
+        // console.log(stateData.data[ah].fullName);
+        // console.log(stateData.data[ah].parkCode);
+        myList[code] = name;
     }
+
+
+    let spot = document.getElementById("try");
+    for (let park of Object.keys(allParkData.data)) {
+        let num = parseInt(park);
+        let name = allParkData.data[num].fullName;
+        console.log(name);
+        let text = document.createElement("li");
+        text.innerHTML = name;
+        spot.appendChild(text);
+    }
+    
+    // console.log(myList);
+    
+    // let parkList = {};
+    // for (let state of Object.keys(stateData.data)) {
+    //     let ah = parseInt(state);
+    //     // console.log(stateData.data[ah]);
+    //     let name = stateData.data[ah].fullName;
+    //     let code = stateData.data[ah].parkCode;
+    //     // console.log(stateData.data[ah].fullName);
+    //     // console.log(stateData.data[ah].parkCode);
+    //     myList[code] = name;
+    // }
+    
+    // console.log(myList);
+    
+    
+    let form = document.getElementById(`input_yeet`);
+    while (form.length > 0) {
+        form.remove(form.length-1);
+    }
+    
+
+    for(var key in myList) {
+        var val = myList[key];
+        // console.log(key);
+        // console.log(val);
+        let choice = document.createElement(`option`);
+        choice.innerHTML = val;
+        choice.value = key;
+        form.appendChild(choice);   
+    }
+    
+
     // let parkName = parkData.data[0].name;
     let latlong = parkData.data[0].latLong;
     let latlongArray = latlong.split(" ");
@@ -67,3 +124,11 @@ function initMapParams(mapLat, mapLong) {
         map:map
     });
 }
+
+// function populateSelectOption(elementID, optionsArray) {
+//     let menu = document.querySelector(elementID);
+//     for (let artist of optionsArray) {
+//         let newOption = socument.createElement("option");
+
+//     }
+// }
