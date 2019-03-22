@@ -4,30 +4,20 @@
 /* jshint jquery: true */
 'use strict';
 
+// let stateDict = {}
+
 async function getData(url) {
     return fetch(url)
     .then(response => response.json())
     .catch(error => console.log(error));
 }
 
-async function topGame() {
-    let park = document.getElementById('input_park').value;
+async function selectState() {
     let state = document.getElementById('input_state').value;
-
-    let [parkData] = await Promise.all([
-        getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
-    ]);
     let [stateData] = await Promise.all([
         getData(`https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
-    let [allParkData] = await Promise.all([
-        getData(`https://developer.nps.gov/api/v1/parks?limit=500&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
-    ]);
 
-
-    console.log(parkData.data[0]);
-    console.log(stateData.data);
-    console.log(allParkData.data);
     let myList = {};
     for (let state of Object.keys(stateData.data)) {
         let ah = parseInt(state);
@@ -39,16 +29,48 @@ async function topGame() {
         myList[code] = name;
     }
 
-
-    let spot = document.getElementById("try");
-    for (let park of Object.keys(allParkData.data)) {
-        let num = parseInt(park);
-        let name = allParkData.data[num].fullName;
-        console.log(name);
-        let text = document.createElement("li");
-        text.innerHTML = name;
-        spot.appendChild(text);
+    let form = document.getElementById(`input_park`);
+    while (form.length > 0) {
+        form.remove(form.length-1);
     }
+    
+
+    for(var key in myList) {
+        var val = myList[key];
+        // console.log(key);
+        // console.log(val);
+        let choice = document.createElement(`option`);
+        choice.innerHTML = val;
+        choice.value = key;
+        form.appendChild(choice);   
+    }
+
+}
+
+async function topGame() {
+    let park = document.getElementById('input_park').value;
+
+    let [parkData] = await Promise.all([
+        getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
+    ]);
+    // let [allParkData] = await Promise.all([
+    //     getData(`https://developer.nps.gov/api/v1/parks?limit=500&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
+    // ]);
+
+
+    // console.log(parkData.data[0]);
+    // console.log(allParkData.data);
+
+
+    // let spot = document.getElementById("try");
+    // for (let park of Object.keys(allParkData.data)) {
+    //     let num = parseInt(park);
+    //     let name = allParkData.data[num].fullName;
+    //     console.log(name);
+    //     let text = document.createElement("li");
+    //     text.innerHTML = name;
+    //     spot.appendChild(text);
+    // }
     
     // console.log(myList);
     
@@ -66,21 +88,6 @@ async function topGame() {
     // console.log(myList);
     
     
-    let form = document.getElementById(`input_yeet`);
-    while (form.length > 0) {
-        form.remove(form.length-1);
-    }
-    
-
-    for(var key in myList) {
-        var val = myList[key];
-        // console.log(key);
-        // console.log(val);
-        let choice = document.createElement(`option`);
-        choice.innerHTML = val;
-        choice.value = key;
-        form.appendChild(choice);   
-    }
     
 
     // let parkName = parkData.data[0].name;
