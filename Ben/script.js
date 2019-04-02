@@ -4,13 +4,45 @@
 /* jshint jquery: true */
 'use strict';
 
-// let stateDict = {}
+let stateDict = {"" : " ", "AL" : "Alabama", "AK" : "Alaska", 
+                "AZ" : "Arizona", "AR" : "Arkansas", "CA" : "California", 
+                "CO" : "Colorado", "CT" : "Connecticut", "DE" : "Delaware", 
+                "FL" : "Florida", "GA" : "Georgia", "HI" : "Hawaii", "ID" : "Idaho", 
+                "IL" : "Illinois", "IN" : "Indiana", "IA" : "Iowa", "KS" : "Kansas", 
+                "KY" : "Kentucky", "LA" : "Louisiana", "ME" : "Maine", "MD" : "Maryland", 
+                "MA" : "Massachusetts", "MI" : "Michigan", "MN" : "Minnesota", 
+                "MS" : "Mississippi", "MO" : "Missouri", "MT" : "Montana", 
+                "NE" : "Nebraska", "NV" : "Nevada", "NH" : "New Hampshire", 
+                "NJ" : "New Jersey", "NM" : "New Mexico", "NY" : "New York", 
+                "NC" : "North Carolina", "ND" : "North Dakota", "OH" : "Ohio", 
+                "OK" : "Oklahoma", "OR" : "Oregon", "PA" : "Pennsylvania", 
+                "RI" : "Rhode Island", "SC" : "South Carolina", "SD" : "South Dakota", 
+                "TN" : "Tennessee", "TX" : "Texas", "UT" : "Utah", "VT" : "Vermont", 
+                "VA" : "Virginia", "WA" : "Washington", "WV" : "West Virginia", 
+                "WI" : "Wisconsin", "WY" : "Wyoming", "DC" : "Washington DC"}
+
+function populateSelectOption() {
+
+    let states = document.getElementById(`input_state`);
+    
+    
+    for(var key in stateDict) {
+        var val = stateDict[key];
+        let choice = document.createElement(`option`);
+        choice.innerHTML = val;
+        choice.value = key;
+        states.appendChild(choice);   
+    }
+}
+
 
 async function getData(url) {
     return fetch(url)
     .then(response => response.json())
     .catch(error => console.log(error));
 }
+
+
 
 async function selectState() {
     let state = document.getElementById('input_state').value;
@@ -21,11 +53,8 @@ async function selectState() {
     let myList = {};
     for (let state of Object.keys(stateData.data)) {
         let ah = parseInt(state);
-        // console.log(stateData.data[ah]);
         let name = stateData.data[ah].fullName;
         let code = stateData.data[ah].parkCode;
-        // console.log(stateData.data[ah].fullName);
-        // console.log(stateData.data[ah].parkCode);
         myList[code] = name;
     }
 
@@ -33,12 +62,14 @@ async function selectState() {
     while (form.length > 0) {
         form.remove(form.length-1);
     }
-    
+ 
+    let choice = document.createElement(`option`);
+    choice.innerHTML = "Choose a Park";
+    choice.value = " ";
+    form.appendChild(choice);  
 
     for(var key in myList) {
         var val = myList[key];
-        // console.log(key);
-        // console.log(val);
         let choice = document.createElement(`option`);
         choice.innerHTML = val;
         choice.value = key;
@@ -53,44 +84,7 @@ async function topGame() {
     let [parkData] = await Promise.all([
         getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
-    // let [allParkData] = await Promise.all([
-    //     getData(`https://developer.nps.gov/api/v1/parks?limit=500&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
-    // ]);
 
-
-    // console.log(parkData.data[0]);
-    // console.log(allParkData.data);
-
-
-    // let spot = document.getElementById("try");
-    // for (let park of Object.keys(allParkData.data)) {
-    //     let num = parseInt(park);
-    //     let name = allParkData.data[num].fullName;
-    //     console.log(name);
-    //     let text = document.createElement("li");
-    //     text.innerHTML = name;
-    //     spot.appendChild(text);
-    // }
-    
-    // console.log(myList);
-    
-    // let parkList = {};
-    // for (let state of Object.keys(stateData.data)) {
-    //     let ah = parseInt(state);
-    //     // console.log(stateData.data[ah]);
-    //     let name = stateData.data[ah].fullName;
-    //     let code = stateData.data[ah].parkCode;
-    //     // console.log(stateData.data[ah].fullName);
-    //     // console.log(stateData.data[ah].parkCode);
-    //     myList[code] = name;
-    // }
-    
-    // console.log(myList);
-    
-    
-    
-
-    // let parkName = parkData.data[0].name;
     let latlong = parkData.data[0].latLong;
     let latlongArray = latlong.split(" ");
     var lat = latlongArray[0].split(":");
@@ -109,12 +103,12 @@ async function topGame() {
     let description = parkData.data[0].description;
     let parkDescription = document.getElementById('parkDescription');
     parkDescription.innerHTML = description;
-    parkDescription.setAttribute('class', 'alert alert-primary');
+    parkDescription.setAttribute('class', 'information alert alert-primary');
 
     let note = document.getElementById('currentTemp');
     let fullName = parkData.data[0].fullName;
-    note.innerHTML = `The current temperature in ${fullName} is ${temperatureF} degrees F`
-    note.setAttribute('class', 'alert alert-primary');
+    note.innerHTML = `The current temperature in ${fullName} is ${temperatureF}° F`
+    note.setAttribute('class', 'information alert alert-warning');
 
     initMapParams(parseFloat(lat), parseFloat(long));
 
@@ -132,10 +126,6 @@ function initMapParams(mapLat, mapLong) {
     });
 }
 
-// function populateSelectOption(elementID, optionsArray) {
-//     let menu = document.querySelector(elementID);
-//     for (let artist of optionsArray) {
-//         let newOption = socument.createElement("option");
-
-//     }
-// }
+window.onload = function() {
+    populateSelectOption();
+};

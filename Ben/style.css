@@ -1,0 +1,19 @@
+.row {
+    margin-left: 10px;
+}
+
+.prompt {
+    width:20%;
+    height: 60px;
+}
+
+.dropdown {
+    margin-left: 10px;
+    width: 30%;
+    height: 60px;
+}
+
+.information {
+    margin-left: 10px;
+    width: 65%;
+}
