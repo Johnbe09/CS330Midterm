@@ -47,7 +47,7 @@ async function getData(url) {
 async function selectState() {
     let state = document.getElementById('input_state').value;
     let [stateData] = await Promise.all([
-        getData(`https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
+        getData(`https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=olV57qfxb2RvtEofE0UYsPRRhphPjaXPaD6kyhjo`)
     ]);
 
     let myList = {};
@@ -82,35 +82,54 @@ async function topGame() {
     let park = document.getElementById('input_park').value;
 
     let [parkData] = await Promise.all([
-        getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
+        getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=olV57qfxb2RvtEofE0UYsPRRhphPjaXPaD6kyhjo`)
     ]);
 
+    console.log("hello");
+    console.log(parkData.data[0]);
     let latlong = parkData.data[0].latLong;
-    let latlongArray = latlong.split(" ");
-    var lat = latlongArray[0].split(":");
-    lat = lat[1].split(",");
-    lat = lat[0];
-    var long = latlongArray[1].split(":");
-    long = long[1];
+    if (typeof latLong == "undefined") {
+        var latLong = "large";
+        var lat = 39.1001;
+        var long = -94.5781;
+    } else {
+        let latlongArray = latlong.split(" ");
+        var lat = latlongArray[0].split(":");
+        lat = lat[1].split(",");
+        lat = lat[0];
+        var long = latlongArray[1].split(":");
+        long = long[1];
 
-    let [cityWeather] = await Promise.all([
-        getData(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=2b631a9cde7c2b110c438c3565bf8c5d`)
-    ]);
-    let temperatureK = cityWeather.main.temp;
-    let temperatureF = (temperatureK -273.15) * 1.8 +32;
-    temperatureF = temperatureF.toFixed(2);
-
+    }
+    
     let description = parkData.data[0].description;
     let parkDescription = document.getElementById('parkDescription');
     parkDescription.innerHTML = description;
     parkDescription.setAttribute('class', 'information alert alert-primary');
 
-    let note = document.getElementById('currentTemp');
-    let fullName = parkData.data[0].fullName;
-    note.innerHTML = `The current temperature in ${fullName} is ${temperatureF}° F`
-    note.setAttribute('class', 'information alert alert-warning');
+    if (latLong == "large") {
+        let note = document.getElementById('currentTemp');
+        let fullName = parkData.data[0].fullName;
+        note.innerHTML = `Because ${fullName} spans a very large area or even several states, check the region you plan on visiting for local weather.`
+        note.setAttribute('class', 'information alert alert-warning');
 
-    initMapParams(parseFloat(lat), parseFloat(long));
+        mapReturn();
+
+    } else {
+        let [cityWeather] = await Promise.all([
+            getData(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=2b631a9cde7c2b110c438c3565bf8c5d`)
+        ]);
+        let temperatureK = cityWeather.main.temp;
+        let temperatureF = (temperatureK -273.15) * 1.8 +32;
+        temperatureF = temperatureF.toFixed(2);
+    
+        let note = document.getElementById('currentTemp');
+        let fullName = parkData.data[0].fullName;
+        note.innerHTML = `The current temperature in ${fullName} is ${temperatureF}° F`
+        note.setAttribute('class', 'information alert alert-warning');
+    
+        initMapParams(parseFloat(lat), parseFloat(long), 8);
+    }
 
 }
 
@@ -125,6 +144,16 @@ function initMapParams(mapLat, mapLong) {
         map:map
     });
 }
+
+function mapReturn() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 39.1001, lng: -94.5781},
+        zoom: 3
+    }); 
+
+}
+
+
 
 window.onload = function() {
     populateSelectOption();
