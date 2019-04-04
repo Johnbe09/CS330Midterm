@@ -87,6 +87,8 @@ async function topGame() {
         getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
 
+    var parkURL = parkData.data[0].url;
+
     var latlong = parkData.data[0].latLong;
     if (latlong) {
         let latlongArray = latlong.split(" ");
@@ -102,20 +104,29 @@ async function topGame() {
         
     }
     
-    let description = parkData.data[0].description;
-    let parkDescription = document.getElementById('parkDescription');
-    parkDescription.innerHTML = description;
-    parkDescription.setAttribute('class', 'information alert alert-primary');
-
+    var parkLink = `<a href=${parkURL} target="_blank">Park Website</a>`
+    
     if (latLong == "large") {
+        
+        let description = parkData.data[0].description;
+        let parkDescription = document.getElementById('parkDescription');
+        parkDescription.innerHTML = description;
+        parkDescription.setAttribute('class', 'information alert alert-primary');
+        
         let note = document.getElementById('currentTemp');
         let fullName = parkData.data[0].fullName;
-        note.innerHTML = `Because ${fullName} spans a very large area or even several states, check the region you plan on visiting for local weather.`
+        note.innerHTML = `Because ${fullName} spans a very large area or even several states, check the region you plan on visiting for local weather. More park information can be found at this link: ` + parkLink;
         note.setAttribute('class', 'first information alert alert-warning');
 
         mapReturn();
 
     } else {
+
+
+        let description = parkData.data[0].description;
+        let parkDescription = document.getElementById('parkDescription');
+        parkDescription.innerHTML = description;
+        parkDescription.setAttribute('class', 'information alert alert-primary');    
 
         let [cityWeather] = await Promise.all([
             getData(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=2b631a9cde7c2b110c438c3565bf8c5d`)
@@ -126,23 +137,34 @@ async function topGame() {
     
         let note = document.getElementById('currentTemp');
         let fullName = parkData.data[0].fullName;
-        note.innerHTML = `The current temperature in ${fullName} is ${temperatureF}° F`
+        note.innerHTML = `The current temperature in ${fullName} is ${temperatureF}° F. More park information can be found at this link: ` + parkLink;
         note.setAttribute('class', 'second information alert alert-warning');
     
-        initMapParams(parseFloat(lat), parseFloat(long), 8);
+        initMapParams(parseFloat(lat), parseFloat(long), fullName);
     }
 
 }
 
-function initMapParams(mapLat, mapLong) {
+function initMapParams(mapLat, mapLong, fullName) {
 
     var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: mapLat, lng: mapLong},
-    zoom: 8
+        center: {lat: mapLat, lng: mapLong},
+        zoom: 8,
+        mapTypeId: 'hybrid'
     });
+
     var marker = new google.maps.Marker({
         position:{lat: mapLat, lng: mapLong},
-        map:map
+        map: map,
+        title: 'click for name'
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+        content: fullName
+    });
+
+    marker.addListener('click', function() {
+        infowindow.open(marker.get('map'), marker);
     });
 }
 

@@ -1,8 +1,22 @@
-body {
-    background-color: ivory;
+body > header {
+    display: block;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+    border-bottom-width: 2px;
+    background-color: moccasin;
+}
+
+body > header > h1 {
+    color: darkgreen;
+    text-align: center;
+}
+
+body > header > h5 {
+    text-align: center;
 }
 
 .row {
+    margin-top: 15px;
     margin-left: 10px;
 }
 
@@ -10,6 +24,9 @@ body {
     width:20%;
     height: 60px;
     text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
 }
 
 .dropdown {
@@ -22,6 +39,9 @@ body {
     margin: auto;
     margin-bottom: 10px;
     width: 65%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
 }
 
 .location {
@@ -29,4 +49,5 @@ body {
     border-width: 5px;
     border-color: black;
     margin: auto;
+    margin-bottom: 50px;
 }
