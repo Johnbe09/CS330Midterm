@@ -1,3 +1,7 @@
+body {
+    background-color: ivory;
+}
+
 .row {
     margin-left: 10px;
 }
@@ -5,6 +9,7 @@
 .prompt {
     width:20%;
     height: 60px;
+    text-align: center;
 }
 
 .dropdown {
@@ -14,6 +19,14 @@
 }
 
 .information {
-    margin-left: 10px;
+    margin: auto;
+    margin-bottom: 10px;
     width: 65%;
+}
+
+.location {
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
+    margin: auto;
 }

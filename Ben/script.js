@@ -4,6 +4,8 @@
 /* jshint jquery: true */
 'use strict';
 
+// backup national park api key: olV57qfxb2RvtEofE0UYsPRRhphPjaXPaD6kyhjo
+
 let stateDict = {"" : " ", "AL" : "Alabama", "AK" : "Alaska", 
                 "AZ" : "Arizona", "AR" : "Arkansas", "CA" : "California", 
                 "CO" : "Colorado", "CT" : "Connecticut", "DE" : "Delaware", 
@@ -47,7 +49,7 @@ async function getData(url) {
 async function selectState() {
     let state = document.getElementById('input_state').value;
     let [stateData] = await Promise.all([
-        getData(`https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=olV57qfxb2RvtEofE0UYsPRRhphPjaXPaD6kyhjo`)
+        getData(`https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
 
     let myList = {};
@@ -82,24 +84,22 @@ async function topGame() {
     let park = document.getElementById('input_park').value;
 
     let [parkData] = await Promise.all([
-        getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=olV57qfxb2RvtEofE0UYsPRRhphPjaXPaD6kyhjo`)
+        getData(`https://developer.nps.gov/api/v1/parks?parkCode=${park}&api_key=N9qYwDPpR2NIBkGg1YPr6FfGVsjc0xhFfON7ZmPN`)
     ]);
 
-    console.log("hello");
-    console.log(parkData.data[0]);
-    let latlong = parkData.data[0].latLong;
-    if (typeof latLong == "undefined") {
-        var latLong = "large";
-        var lat = 39.1001;
-        var long = -94.5781;
-    } else {
+    var latlong = parkData.data[0].latLong;
+    if (latlong) {
         let latlongArray = latlong.split(" ");
         var lat = latlongArray[0].split(":");
         lat = lat[1].split(",");
         lat = lat[0];
         var long = latlongArray[1].split(":");
         long = long[1];
-
+    } else {
+        var latLong = "large";
+        var lat = 39.1001;
+        var long = -94.5781;
+        
     }
     
     let description = parkData.data[0].description;
@@ -111,11 +111,12 @@ async function topGame() {
         let note = document.getElementById('currentTemp');
         let fullName = parkData.data[0].fullName;
         note.innerHTML = `Because ${fullName} spans a very large area or even several states, check the region you plan on visiting for local weather.`
-        note.setAttribute('class', 'information alert alert-warning');
+        note.setAttribute('class', 'first information alert alert-warning');
 
         mapReturn();
 
     } else {
+
         let [cityWeather] = await Promise.all([
             getData(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=2b631a9cde7c2b110c438c3565bf8c5d`)
         ]);
@@ -126,7 +127,7 @@ async function topGame() {
         let note = document.getElementById('currentTemp');
         let fullName = parkData.data[0].fullName;
         note.innerHTML = `The current temperature in ${fullName} is ${temperatureF}° F`
-        note.setAttribute('class', 'information alert alert-warning');
+        note.setAttribute('class', 'second information alert alert-warning');
     
         initMapParams(parseFloat(lat), parseFloat(long), 8);
     }
